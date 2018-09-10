@@ -8,7 +8,7 @@ alpha = 0.01
 class Data(object):
     """An object to hold the required dataset data."""
 
-    def __init__(self, features, results, theta0=0, theta1=1, alpha=0.01):
+    def __init__(self, features, results, theta0=0, theta1=1, alpha=0.001):
         self.features = features
         self.results = results
         self.theta0 = theta0
@@ -60,20 +60,22 @@ class Data(object):
 
         while n < len(test_features):
             sum_right = sum_right + (
-                        self.hypothesis_minus_actual_value(feature=self.features[n], actual_value=self.results[n]) *
-                        self.features[n])
+                    self.hypothesis_minus_actual_value(feature=self.features[n], actual_value=self.results[n]) *
+                    self.features[n])
             n = n + 1
         sum_right = sum_right * alpha
         sum_right = sum_right / len(self.features)
 
         return theta1 - sum_right
 
-    def batch_gradient_descent(self, threshold = 0.0001):
+    def batch_gradient_descent(self, threshold=0.01):
 
+        lim = 100000
         old_theta0 = self.theta0
         old_theta1 = self.theta1
         has_not_run_yet = True
-        while has_not_run_yet or ((abs(old_theta0-self.theta0) > threshold) or (abs(old_theta1-self.theta1) > threshold)):
+        counter = 0
+        while counter < lim:
             temp0 = self.gradient_descent_0(self.theta0)
             temp1 = self.gradient_descent_1(self.theta1)
             old_theta0 = self.theta0
@@ -81,11 +83,11 @@ class Data(object):
             self.theta0 = temp0
             self.theta1 = temp1
             has_not_run_yet = False
+            counter += 1
 
         print("New Thetas: " + self.theta0.__str__() + ", " + self.theta1.__str__())
 
-
-test_data_object = Data(features=test_features, results=test_results, theta0=theta0, theta1=theta1, alpha=alpha)
-test_data_object.print_info()
-test_data_object.batch_gradient_descent()
-test_data_object.print_info()
+# test_data_object = Data(features=test_features, results=test_results, theta0=theta0, theta1=theta1, alpha=alpha)
+# test_data_object.print_info()
+# test_data_object.batch_gradient_descent()
+# test_data_object.print_info()
