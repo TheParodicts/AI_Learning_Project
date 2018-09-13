@@ -3,6 +3,12 @@ class Data(object):
 
     def __init__(self, features, results, theta0=0, theta1=1, alpha=0.00001):
         """Initialize data, hypothesis, and Gradient descent variables
+
+        :param float [] features: array of features (x)
+        :param float [] results: array of corresponding results to features (y)
+        :param float theta0:
+        :param float theta1:
+        :param float alpha:
         """
 
         self.features = features
